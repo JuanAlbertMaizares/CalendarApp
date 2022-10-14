@@ -26,7 +26,7 @@ export const useCalendarStore = () => {
         // note: props
         events,
         activeEvent,
-        hasEventSelected: !!activeEvent,
+        hasEventSelected: !!activeEvent?._id,
         // note: metodos
         setActiveEvent,
         startSavingEvent,
