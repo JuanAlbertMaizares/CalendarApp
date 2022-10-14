@@ -28,7 +28,7 @@ Modal.setAppElement('#root');
 // note: compo que r un modal personalizado 
 export const CalendarModal = () => {
     const {isDateModalOpen, closeDateModal} = useUiStore();
-    const {activeEvent} = useCalendarStore();
+    const {activeEvent, startSavingEvent} = useCalendarStore();
     const [formSubmitted, setFormSubmitted] = useState(false);
 
     // usestate para formulario
@@ -74,7 +74,7 @@ export const CalendarModal = () => {
     const onCloseModal = () => {
         closeDateModal();
     }
-    const  onSubmit = (event) => {
+    const onSubmit = async(event) => {
         event.preventDefault();
         setFormSubmitted(true);
         const difference = differenceInSeconds( formValues.end, formValues.start);
@@ -84,7 +84,10 @@ export const CalendarModal = () => {
             return;
         }
         if (formValues.title.length <= 0) return;
-        console.log(formValues);
+        // guardado en store
+        await startSavingEvent(formValues);
+        closeDateModal();
+        setFormSubmitted(false);
 
     }
     return (
@@ -151,6 +154,8 @@ export const CalendarModal = () => {
                         rows="5"
                         name="notes"
                         value={ formValues.notes }
+                        onChange={ onInputChanged }
+
                     ></textarea>
                     <small id="emailHelp" className="form-text text-muted">Información adicional</small>
                 </div>

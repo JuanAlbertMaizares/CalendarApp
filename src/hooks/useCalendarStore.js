@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
-import { onSetActiveEvent } from "../store";
+import { onAddNewEvent, onSetActiveEvent, onUpdateEvent } from "../store";
 // note: HOOK COMPONENT que consume la data en el STORE y la suministra junto con metodos de su slice.
 export const useCalendarStore = () => {
     // cargamos el disparador de redux
@@ -10,6 +10,15 @@ export const useCalendarStore = () => {
     const setActiveEvent = ( calendarEvent ) => { // calendarEvent: 
         dispatch(onSetActiveEvent(calendarEvent));
     }
+
+    const startSavingEvent = async( calendarEvent ) => {
+
+        if (calendarEvent._id) {
+            dispatch(onUpdateEvent({...calendarEvent}));
+        } else {
+            dispatch( onAddNewEvent({...calendarEvent, _id: new Date().getTime()} ));
+        }
+    }
     
     return {
         // note: props
@@ -17,5 +26,6 @@ export const useCalendarStore = () => {
         activeEvent,
         // note: metodos
         setActiveEvent,
+        startSavingEvent,
     }
 }
