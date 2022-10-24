@@ -4,9 +4,9 @@
 // esto es, el store no puede llamar a algo que no se cargo aun.
 
 // note: SLICES
-export * from './ui/uiSlice';
+export * from './auth/authSlice';
 export * from './calendar/calendarSlice';
-
+export * from './ui/uiSlice';
 
 
 // note: STORE, que llama a los slices.
