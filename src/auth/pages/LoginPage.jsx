@@ -1,3 +1,4 @@
+import { useAuthStore } from '../../hooks/useAuthStore';
 import { useForm } from '../../hooks/useForm';
 import './LoginPage.css';
 
@@ -13,13 +14,18 @@ const regiterFormFields = {
 }
 
 export const LoginPage = () => {
+    // manejador de llamadas a api
+    const { startLogin } = useAuthStore();
+    //
     const { loginEmail, loginPassword, onInputChange:onLoginInputChange } = useForm( loginFormFields);
+    
     const loginSubmit = ( event ) => {
         event.preventDefault();
-        console.log({loginEmail, loginPassword});
+        startLogin({email: loginEmail, password: loginPassword});
     }
 
     const { registerEmail, registerName, registerPassword, registerPassword2, onInputChange:onRegisterInputChange } = useForm( regiterFormFields);
+    
     const registerSubmit = ( event ) => {
         event.preventDefault();
         console.log({registerEmail, registerName, registerPassword, registerPassword2});
