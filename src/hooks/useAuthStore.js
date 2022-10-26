@@ -60,6 +60,10 @@ export const useAuthStore = () => {
             dispatch( onLogout() );
         }
     }
+    const startLogout = () => {
+        localStorage.clear();
+        dispatch( onLogout() );
+    }
 
     return {
         errorMessage,
@@ -68,6 +72,7 @@ export const useAuthStore = () => {
         
         startLogin,
         startRegister,
-        checkAuthToken
+        checkAuthToken,
+        startLogout
     }
 }
