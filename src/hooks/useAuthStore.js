@@ -1,10 +1,7 @@
 // encargado de realizar las interaccion con el auth en el store.
-
 import { useDispatch, useSelector } from "react-redux"
 import calendarApi from "../api/calendarApi";
 import { clearErrorMessage, onChecking, onLogin, onLogout } from "../store";
-
-
 
 export const useAuthStore = () => {
     const { status, user, errorMessage } = useSelector( state => state.auth );
