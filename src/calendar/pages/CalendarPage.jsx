@@ -2,14 +2,14 @@ import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Navbar, CalendarEvent, CalendarModal, FabAddNew, FabDelete } from "../";
 import { localizer, getMessagesES } from '../../helpers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUiStore, useCalendarStore } from '../../hooks';
 
 // 
 export const CalendarPage = () => {
 
     const {openDateModal} = useUiStore();
-    const {events, setActiveEvent} = useCalendarStore();
+    const {events, setActiveEvent, startLoadingEvents} = useCalendarStore();
     const [lastView, setLastView] = useState(localStorage.getItem('lastView') || 'week');
     const eventStyleGetter = ( event, start, end, isSelected ) => {
     
@@ -36,6 +36,10 @@ export const CalendarPage = () => {
         localStorage.setItem('lastView', event);
         setLastView( event )
     }
+    // con un useEffect mandamos a llmar los eventos, sin dependecia, para que llame solo una vez.
+    useEffect(() => {
+      startLoadingEvents();
+    }, [ ])
     
     return (
         <>
