@@ -40,8 +40,14 @@ export const useCalendarStore = () => {
          
     }
     // mtd: persiste datos a mongo y tambien los coloca en el store
-    const startDeletingEvent = () => {
-        dispatch(onDeleteEvent());
+    const startDeletingEvent = async() => {
+        try {
+            await calendarApi.delete(`/events/${activeEvent.id}`);
+            dispatch(onDeleteEvent());
+        } catch (error) {
+            console.log(error);
+            Swal.fire('Error al eliminar', error.response.data.msg, 'error');
+        }
     }
     // mtd: persiste datos a mongo y tambien los coloca en el store
     const startLoadingEvents = async() => {
@@ -62,7 +68,7 @@ export const useCalendarStore = () => {
         // note: props
         events,
         activeEvent,
-        hasEventSelected: !!activeEvent?._id,
+        hasEventSelected: !!activeEvent?.id,
         // note: metodos
         setActiveEvent,
         startSavingEvent,
